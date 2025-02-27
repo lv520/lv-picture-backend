@@ -43,8 +43,8 @@ knife4j:
 # 对象存储配置（需要从腾讯云获取）
 cos:
   client:
-    host: https://lv-picture-1314104238.cos.ap-shanghai.myqcloud.com
-    secretId: AKIDUny1tZ6ax7GFIEE6lHbkldKpT2NVQ8f2
-    secretKey: IPIya5Ne7QXbXo5JPSRRPF5rRp170f7N
-    region: ap-shanghai
-    bucket: lv-picture-1314104238
+    host: 
+    secretId: 
+    secretKey: 
+    region: 
+    bucket: 
