@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lvhui.lvpicturebackend.model.dto.picture.PictureQueryRequest;
+import com.lvhui.lvpicturebackend.model.dto.picture.PictureReviewRequest;
 import com.lvhui.lvpicturebackend.model.dto.picture.PictureUploadRequest;
 import com.lvhui.lvpicturebackend.model.dto.user.UserQueryRequest;
 import com.lvhui.lvpicturebackend.model.entity.Picture;
@@ -25,13 +26,12 @@ import java.util.List;
 public interface PictureService extends IService<Picture> {
     /**
      * 上传图片
-     *
-     * @param multipartFile
+     * @param inputSource 文件输入源
      * @param pictureUploadRequest
      * @param loginUser
      * @return
      */
-    PictureVO uploadPicture(MultipartFile multipartFile,
+    PictureVO uploadPicture(Object inputSource,
                             PictureUploadRequest pictureUploadRequest,
                             User loginUser);
 
@@ -54,4 +54,18 @@ public interface PictureService extends IService<Picture> {
      * @param picture
      */
     void validPicture(Picture picture);
+
+    /**
+     *  用户图片审核
+     * @param pictureReviewRequest
+     * @param loginUser 谁在审核
+     */
+    void doPictureReview(PictureReviewRequest pictureReviewRequest, User loginUser);
+
+    /**
+     * 过审逻辑
+     * @param picture
+     * @param loginUser
+     */
+    void fillReviewParams(Picture picture, User loginUser);
 }
