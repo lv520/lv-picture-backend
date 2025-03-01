@@ -57,9 +57,16 @@ public abstract class PictureUploadTemplate {
             List<CIObject> objectList = processResults.getObjectList();
             if (CollUtil.isNotEmpty(objectList)) {
                 CIObject compressedCiObject = objectList.get(0);
+                // 缩略图默认等于压缩图
+                CIObject thumbnailCiObject = compressedCiObject;
+                // 有生成缩略图，才得到缩略图
+                if (objectList.size() > 1) {
+                    thumbnailCiObject = objectList.get(1);
+                }
                 // 封装压缩图返回结果
-                return buildResult(originFilename, compressedCiObject);
+                return buildResult(originFilename, compressedCiObject, thumbnailCiObject);
             }
+
             // 封装原图返回结果
             return buildResult(originFilename, file, uploadPath, imageInfo);
         } catch (Exception e) {
@@ -71,16 +78,18 @@ public abstract class PictureUploadTemplate {
 
     /**
      * 封装返回结果
-     * @param originFilename
-     * @param compressedCiObject
+     * @param originFilename 原始文件名
+     * @param compressedCiObject 压缩后的对象
+     * @param thumbnailCiObject  缩略图对象
      * @return
      */
-
-    private UploadPictureResult buildResult(String originFilename, CIObject compressedCiObject) {
+    private UploadPictureResult buildResult(String originFilename, CIObject compressedCiObject, CIObject thumbnailCiObject) {
         UploadPictureResult uploadPictureResult = new UploadPictureResult();
         int picWidth = compressedCiObject.getWidth();
         int picHeight = compressedCiObject.getHeight();
         double picScale = NumberUtil.round(picWidth * 1.0 / picHeight, 2).doubleValue();
+        UploadPictureResult uploadPictureResult1 = new UploadPictureResult();
+        uploadPictureResult.setUrl(cosClientConfig.getHost() + "/" + compressedCiObject.getKey());
         uploadPictureResult.setPicName(FileUtil.mainName(originFilename));
         uploadPictureResult.setPicWidth(picWidth);
         uploadPictureResult.setPicHeight(picHeight);
@@ -88,7 +97,7 @@ public abstract class PictureUploadTemplate {
         uploadPictureResult.setPicFormat(compressedCiObject.getFormat());
         uploadPictureResult.setPicSize(compressedCiObject.getSize().longValue());
         // 设置图片为压缩后的地址
-        uploadPictureResult.setUrl(cosClientConfig.getHost() + "/" + compressedCiObject.getKey());
+        uploadPictureResult.setThumbnailUrl(cosClientConfig.getHost() + "/" + thumbnailCiObject.getKey());
         return uploadPictureResult;
     }
 
