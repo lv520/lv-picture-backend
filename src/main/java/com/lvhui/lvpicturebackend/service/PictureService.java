@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lvhui.lvpicturebackend.model.dto.picture.PictureQueryRequest;
 import com.lvhui.lvpicturebackend.model.dto.picture.PictureReviewRequest;
+import com.lvhui.lvpicturebackend.model.dto.picture.PictureUploadByBatchRequest;
 import com.lvhui.lvpicturebackend.model.dto.picture.PictureUploadRequest;
 import com.lvhui.lvpicturebackend.model.dto.user.UserQueryRequest;
 import com.lvhui.lvpicturebackend.model.entity.Picture;
@@ -68,4 +69,17 @@ public interface PictureService extends IService<Picture> {
      * @param loginUser
      */
     void fillReviewParams(Picture picture, User loginUser);
+
+    /**
+     * 批量抓取和创建图片
+     *
+     * @param pictureUploadByBatchRequest
+     * @param loginUser
+     * @return 成功创建的图片数
+     */
+    Integer uploadPictureByBatch(
+            PictureUploadByBatchRequest pictureUploadByBatchRequest,
+            User loginUser
+    );
+
 }
