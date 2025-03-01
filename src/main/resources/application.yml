@@ -2,6 +2,9 @@ server:
   port: 8123
   servlet:
     context-path: /api
+    session:
+      cookie:
+        max-age: 2592000
 
 spring:
   application:
@@ -19,7 +22,15 @@ spring:
     port: 6379
     timeout: 5000
     #password: 000000
-    # 开放更大的文件上传体积 spring boot默认为1M
+
+      # session 配置
+  session:
+    store-type: redis
+        # session 30 天过期
+    timeout: 2592000
+
+
+  # 开放更大的文件上传体积 spring boot默认为1M
   servlet:
     multipart:
       max-file-size: 10MB

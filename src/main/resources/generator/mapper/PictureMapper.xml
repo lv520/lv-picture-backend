@@ -7,6 +7,7 @@
     <resultMap id="BaseResultMap" type="generator.domain.Picture">
             <id property="id" column="id" />
             <result property="url" column="url" />
+            <result property="thumbnaiUrl" column="thumbnaiUrl" />
             <result property="name" column="name" />
             <result property="introduction" column="introduction" />
             <result property="category" column="category" />
@@ -28,7 +29,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,url,name,introduction,category,tags,
+        id,url,name,thumbnaiUrl,introduction,category,tags,
         picSize,picWidth,picHeight,picScale,picFormat,
         userId,createTime,editTime,updateTime,isDelete,
         reviewStatus,reviewMessage,reviewerId,reviewTime
