@@ -4,10 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="generator.mapper.PictureMapper">
 
-    <resultMap id="BaseResultMap" type="generator.domain.Picture">
+    <resultMap id="BaseResultMap" type="com.lvhui.lvpicturebackend.model.entity.Picture">
             <id property="id" column="id" />
             <result property="url" column="url" />
-            <result property="thumbnaiUrl" column="thumbnaiUrl" />
+            <result property="thumbnailUrl" column="thumbnailUrl" />
             <result property="name" column="name" />
             <result property="introduction" column="introduction" />
             <result property="category" column="category" />
@@ -17,7 +17,9 @@
             <result property="picHeight" column="picHeight" />
             <result property="picScale" column="picScale" />
             <result property="picFormat" column="picFormat" />
+            <result property="picColor" column="picColor" />
             <result property="userId" column="userId" />
+            <result property="spaceId" column="spaceId" />
             <result property="createTime" column="createTime" />
             <result property="editTime" column="editTime" />
             <result property="updateTime" column="updateTime" />
@@ -31,7 +33,7 @@
     <sql id="Base_Column_List">
         id,url,name,thumbnaiUrl,introduction,category,tags,
         picSize,picWidth,picHeight,picScale,picFormat,
-        userId,createTime,editTime,updateTime,isDelete,
+        userId,spaceId,createTime,editTime,updateTime,isDelete,
         reviewStatus,reviewMessage,reviewerId,reviewTime
     </sql>
 </mapper>
