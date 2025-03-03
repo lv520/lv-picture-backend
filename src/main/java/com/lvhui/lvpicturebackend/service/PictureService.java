@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lvhui.lvpicturebackend.api.aliyunai.model.CreateOutPaintingTaskResponse;
 import com.lvhui.lvpicturebackend.model.dto.picture.*;
 import com.lvhui.lvpicturebackend.model.dto.user.UserQueryRequest;
 import com.lvhui.lvpicturebackend.model.entity.Picture;
@@ -124,4 +125,10 @@ public interface PictureService extends IService<Picture> {
      */
     void editPictureByBatch(PictureEditByBatchRequest pictureEditByBatchRequest, User loginUser);
 
+    /**
+     * 创建扩图任务
+     * @param createPictureOutPaintingTaskRequest
+     * @param loginUser
+     */
+    CreateOutPaintingTaskResponse createPictureOutPaintingTask(CreatePictureOutPaintingTaskRequest createPictureOutPaintingTaskRequest, User loginUser);
 }
