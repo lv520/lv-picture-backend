@@ -22,21 +22,43 @@ spring:
     port: 6379
     timeout: 5000
     #password: 000000
-
       # session 配置
   session:
     store-type: redis
         # session 30 天过期
     timeout: 2592000
-
-
   # 开放更大的文件上传体积 spring boot默认为1M
   servlet:
     multipart:
       max-file-size: 10MB
+  # 空间图片分表
+  shardingsphere:
+    datasource:
+      names: lv_picture
+      lv_picture:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/lv_picture
+        username: root
+        password: root
+    rules:
+      sharding:
+        tables:
+          picture:
+            actual-data-nodes: lv_picture.picture  # 动态分表
+            table-strategy:
+              standard:
+                sharding-column: spaceId
+                sharding-algorithm-name: picture_sharding_algorithm  # 使用自定义分片算法
+        sharding-algorithms:
+          picture_sharding_algorithm:
+            type: CLASS_BASED
+            props:
+              strategy: standard
+              algorithmClassName: com.lvhui.lvpicturebackend.manager.sharding.PictureShardingAlgorithm
+    props:
+      sql-show: true
    # Redis 配置
-
-
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
@@ -47,6 +69,15 @@ mybatis-plus:
       logic-delete-field: isDelete # 全局逻辑删除的实体字段名
       logic-delete-value: 1 # 逻辑已删除值（默认为 1）
       logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
+    enable-sql-runner: true
+
+
+
+
+
+
+
+
 #houduan接口文档生成
 knife4j:
   enable: true
@@ -58,6 +89,9 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.lvhui.lvpicturebackend.controller
+
+
+
 
 ## 对象存储配置（需要从腾讯云获取）
 cos:
