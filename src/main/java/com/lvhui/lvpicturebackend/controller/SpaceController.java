@@ -1,18 +1,16 @@
 package com.lvhui.lvpicturebackend.controller;
 
 
-import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 import com.lvhui.lvpicturebackend.annotation.AuthCheck;
 import com.lvhui.lvpicturebackend.common.BaseResponse;
 import com.lvhui.lvpicturebackend.common.DeleteRequest;
 import com.lvhui.lvpicturebackend.common.ResultUtils;
-import com.lvhui.lvpicturebackend.config.UserConstant;
+import com.lvhui.lvpicturebackend.constant.UserConstant;
 import com.lvhui.lvpicturebackend.exception.BusinessException;
 import com.lvhui.lvpicturebackend.exception.ErrorCode;
 import com.lvhui.lvpicturebackend.exception.ThrowUtils;
+import com.lvhui.lvpicturebackend.manager.auth.SpaceUserAuthManager;
 import com.lvhui.lvpicturebackend.model.dto.space.*;
 import com.lvhui.lvpicturebackend.model.entity.Space;
 import com.lvhui.lvpicturebackend.model.entity.User;
@@ -22,18 +20,13 @@ import com.lvhui.lvpicturebackend.service.SpaceService;
 import com.lvhui.lvpicturebackend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -45,7 +38,8 @@ public class SpaceController {
     private SpaceService spaceService;
     @Resource
     private UserService userService;
-
+    @Resource
+    private SpaceUserAuthManager spaceUserAuthManager;
 
     @PostMapping("/add")
     public BaseResponse<Long> addSpace(@RequestBody SpaceAddRequest spaceAddRequest, HttpServletRequest request) {
@@ -131,11 +125,12 @@ public class SpaceController {
         ThrowUtils.throwIf(space == null, ErrorCode.NOT_FOUND_ERROR);
         SpaceVO spaceVO = spaceService.getSpaceVO(space, request);
         User loginUser = userService.getLoginUser(request);
-        //List<String> permissionList = spaceUserAuthManager.getPermissionList(space, loginUser);
-        //spaceVO.setPermissionList(permissionList);
+        List<String> permissionList = spaceUserAuthManager.getPermissionList(space, loginUser);
+        spaceVO.setPermissionList(permissionList);
         // 获取封装类
         return ResultUtils.success(spaceVO);
     }
+
 
     /**
      * 分页获取空间列表（仅管理员可用）

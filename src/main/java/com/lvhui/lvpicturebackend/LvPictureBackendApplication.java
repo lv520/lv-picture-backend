@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class LvPictureBackendApplication {
 
     public static void main(String[] args) {
+        // 运行Spring Boot应用程序
         SpringApplication.run(LvPictureBackendApplication.class, args);
     }
 }
