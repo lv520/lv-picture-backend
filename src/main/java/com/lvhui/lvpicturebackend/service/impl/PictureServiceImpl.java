@@ -51,6 +51,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import com.lvhui.lvpicturebackend.manager.CosManager;
 /**
@@ -388,6 +389,9 @@ public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture>
         if (StrUtil.isBlank(namePrefix)) {
             namePrefix = searchText;
         }
+        // 生成随机数
+        int randomNumber = ThreadLocalRandom.current().nextInt(10000); // 生成一个 0 到 9999 的随机数
+        namePrefix += "_" + randomNumber; // 拼接随机数
         ThrowUtils.throwIf(count > 30, ErrorCode.PARAMS_ERROR, "最多 30 条");
         // 要抓取的地址
         String fetchUrl = String.format("https://cn.bing.com/images/async?q=%s&mmasync=1", searchText);
@@ -454,7 +458,8 @@ public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture>
 //        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
 
         // 校验权限
-        checkPictureAuth(loginUser, oldPicture);
+        // 改为使用注解鉴权
+        // checkPictureAuth(loginUser, oldPicture);
         // 开启事务
         transactionTemplate.execute(status -> {
             // 操作数据库
@@ -492,7 +497,8 @@ public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture>
         Picture oldPicture = this.getById(id);
         ThrowUtils.throwIf(oldPicture == null, ErrorCode.NOT_FOUND_ERROR);
         // 校验权限
-        checkPictureAuth(loginUser, oldPicture);
+        // 改为使用注解鉴权
+        // checkPictureAuth(loginUser, oldPicture);
         // 补充审核参数
         this.fillReviewParams(picture, loginUser);
         // 操作数据库
@@ -635,7 +641,8 @@ public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture>
         Picture picture = Optional.ofNullable(this.getById(pictureId))
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_ERROR));
         // 权限校验
-        checkPictureAuth(loginUser, picture);
+        // 改为使用注解鉴权
+        // checkPictureAuth(loginUser, picture);
         // 构造请求参数
         CreateOutPaintingTaskRequest taskRequest = new CreateOutPaintingTaskRequest();
         CreateOutPaintingTaskRequest.Input input = new CreateOutPaintingTaskRequest.Input();

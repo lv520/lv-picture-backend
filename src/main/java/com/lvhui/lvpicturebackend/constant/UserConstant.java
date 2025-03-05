@@ -1,4 +1,4 @@
-package com.lvhui.lvpicturebackend.config;
+package com.lvhui.lvpicturebackend.constant;
 
 /**
  * 用户常量

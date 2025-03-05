@@ -1,18 +1,13 @@
 package com.lvhui.lvpicturebackend.service;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lvhui.lvpicturebackend.model.dto.space.SpaceAddRequest;
-import com.lvhui.lvpicturebackend.model.dto.space.SpaceQueryRequest;
 import com.lvhui.lvpicturebackend.model.dto.space.analyze.*;
 import com.lvhui.lvpicturebackend.model.entity.Space;
+import com.lvhui.lvpicturebackend.model.entity.SpaceUser;
 import com.lvhui.lvpicturebackend.model.entity.User;
-import com.lvhui.lvpicturebackend.model.vo.SpaceVO;
 import com.lvhui.lvpicturebackend.model.vo.space.analyze.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -67,4 +62,7 @@ public interface SpaceAnalyzeService extends IService<Space> {
      * @return
      */
     List<Space> getSpaceRankAnalyze(SpaceRankAnalyzeRequest spaceRankAnalyzeRequest, User loginUser);
+
+
+
 }

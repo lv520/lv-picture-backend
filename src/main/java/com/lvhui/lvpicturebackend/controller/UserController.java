@@ -5,7 +5,7 @@ import com.lvhui.lvpicturebackend.annotation.AuthCheck;
 import com.lvhui.lvpicturebackend.common.BaseResponse;
 import com.lvhui.lvpicturebackend.common.DeleteRequest;
 import com.lvhui.lvpicturebackend.common.ResultUtils;
-import com.lvhui.lvpicturebackend.config.UserConstant;
+import com.lvhui.lvpicturebackend.constant.UserConstant;
 import com.lvhui.lvpicturebackend.exception.BusinessException;
 import com.lvhui.lvpicturebackend.exception.ErrorCode;
 import com.lvhui.lvpicturebackend.exception.ThrowUtils;
