@@ -23,7 +23,7 @@ create table if not exists user
 ) comment '用户' collate = utf8mb4_unicode_ci;
 
 
--- 图片表
+
 -- 图片表
 create table if not exists picture
 (
@@ -118,3 +118,9 @@ create table if not exists space_user
     INDEX idx_spaceId (spaceId),                    -- 提升按空间查询的性能
     INDEX idx_userId (userId)                       -- 提升按用户查询的性能
 ) comment '空间用户关联' collate = utf8mb4_unicode_ci;
+
+-- 扩展用户表 新增会员功能
+ALTER TABLE user
+    ADD COLUMN vipExpireTime datetime NULL COMMENT'会员过期时间',
+    ADD COLUMN vipCode varchar(128) NULL COMMENT '会员兑换码',
+    ADD COLUMN vipNumber bigint NULL COMMENT '会员编号';
